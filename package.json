@@ -20,7 +20,6 @@
     "axios": "^0.18.0",
     "blockcypher": "^0.2.0",
     "eth-query": "^2.1.0",
-    "pify": "^3.0.0",
     "safe-event-emitter": "^1.0.1"
   },
   "devDependencies": {

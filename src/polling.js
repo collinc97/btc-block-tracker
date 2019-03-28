@@ -1,4 +1,3 @@
-const pify = require('pify')
 const BaseBlockTracker = require('./base')
 const axios = require('axios')
 // const bcypher = require('blockcypher');

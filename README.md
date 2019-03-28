@@ -1,15 +1,17 @@
 
-# eth-block-tracker
+# btc-block-tracker
 
-This module walks the Ethereum blockchain, keeping track of the latest block.
-It uses a web3 provider as a data source and will continuously poll for the next block.
+This project is forked from [eth-block-tracker](https://github.com/MetaMask/eth-block-tracker) and has been adapted for the Bitcoin Blockchain.
+
+This module walks the Bitcoin blockchain, keeping track of the latest block.
+It uses a BlockCypher provider as a data source and will continuously poll for the next block.
 
 ```js
 const HttpProvider = require('ethjs-provider-http')
 const PollingBlockTracker = require('eth-block-tracker')
 
 const provider = new HttpProvider('https://mainnet.infura.io')
-const blockTracker = new PollingBlockTracker({ provider })
+const blockTracker = new PollingBlockTracker({pollingInterval : 600000})
 blockTracker.on('latest', console.log)
 ```
 
@@ -17,7 +19,7 @@ blockTracker.on('latest', console.log)
 
 ##### new PollingBlockTracker({ provider, pollingInterval, retryTimeout, keepEventLoopActive })
 
-creates a new block tracker with `provider` as a data source and
+creates a new block tracker with BlockCypher as a data source and
 `pollingInterval` (ms) timeout between polling for the latest block.
 If an Error is encountered when fetching blocks, it will wait `retryTimeout` (ms) before attempting again.
 If `keepEventLoopActive` is false, in Node.js it will [unref the polling timeout](https://nodejs.org/api/timers.html#timers_timeout_unref), allowing the process to exit during the polling interval. defaults to `true`, meaning the process will be kept alive.
