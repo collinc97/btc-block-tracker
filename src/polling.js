@@ -1,13 +1,15 @@
 const pify = require('pify')
 const BaseBlockTracker = require('./base')
+const axios = require('axios')
+// const bcypher = require('blockcypher');
 
 const sec = 1000
 
 class PollingBlockTracker extends BaseBlockTracker {
 
-  constructor (opts = {}) {
+  constructor(opts = {}) {
     // parse + validate args
-    if (!opts.provider) throw new Error('PollingBlockTracker - no provider specified.')
+    // if (!opts.provider) throw new Error('PollingBlockTracker - no provider specified.')
     const pollingInterval = opts.pollingInterval || 20 * sec
     const retryTimeout = opts.retryTimeout || pollingInterval / 10
     const keepEventLoopActive = opts.keepEventLoopActive !== undefined ? opts.keepEventLoopActive : true
@@ -29,7 +31,7 @@ class PollingBlockTracker extends BaseBlockTracker {
   //
 
   // trigger block polling
-  async checkForLatestBlock () {
+  async checkForLatestBlock() {
     await this._updateLatestBlock()
     return await this.getLatestBlock()
   }
@@ -38,11 +40,11 @@ class PollingBlockTracker extends BaseBlockTracker {
   // private
   //
 
-  _start () {
+  _start() {
     this._performSync().catch(err => this.emit('error', err))
   }
 
-  async _performSync () {
+  async _performSync() {
     while (this._isRunning) {
       try {
         await this._updateLatestBlock()
@@ -59,25 +61,36 @@ class PollingBlockTracker extends BaseBlockTracker {
     }
   }
 
-  async _updateLatestBlock () {
+  async _updateLatestBlock() {
     // fetch + set latest block
     const latestBlock = await this._fetchLatestBlock()
     this._newPotentialLatest(latestBlock)
   }
 
-  async _fetchLatestBlock () {
-    const req = { id: 1, method: 'eth_blockNumber', params: [] }
+  async _fetchLatestBlock() {
+    // let bcapi = new bcypher('btc', 'main', 'e5ae43f99a9847aea3cb6b4d8ff9e59d');
+    // function printResponse(err, data) {
+    //   if (err != null) {
+    //     console.log(err);
+    //   } else {
+
+    //     console.log(data);
+    //   }
+    // }
+    // const req = { id: 1, method: 'eth_blockNumber', params: [] }
     if (this._setSkipCacheFlag) req.skipCache = true
-    const res = await pify((cb) => this._provider.sendAsync(req, cb))()
+    // const res = await pify((cb) => this._provider.sendAsync(req, cb))()
+    const res = await axios.get('https://api.blockcypher.com/v1/btc/main')
+    // console.log(res.data);
     if (res.error) throw new Error(`PollingBlockTracker - encountered error fetching block:\n${res.error}`)
-    return res.result
+    return res.data.height
   }
 
 }
 
 module.exports = PollingBlockTracker
 
-function timeout (duration, unref) {
+function timeout(duration, unref) {
   return new Promise(resolve => {
     const timoutRef = setTimeout(resolve, duration)
     // don't keep process open

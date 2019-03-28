@@ -121,7 +121,7 @@ class BaseBlockTracker extends SafeEventEmitter {
   _newPotentialLatest (newBlock) {
     const currentBlock = this._currentBlock
     // only update if blok number is higher
-    if (currentBlock && (hexToInt(newBlock) <= hexToInt(currentBlock))) return
+    if (currentBlock && (newBlock <= currentBlock)) return
     this._setCurrentBlock(newBlock)
   }
 
