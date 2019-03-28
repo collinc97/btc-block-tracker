@@ -7,17 +7,14 @@ This module walks the Bitcoin blockchain, keeping track of the latest block.
 It uses a BlockCypher provider as a data source and will continuously poll for the next block.
 
 ```js
-const HttpProvider = require('ethjs-provider-http')
-const PollingBlockTracker = require('eth-block-tracker')
-
-const provider = new HttpProvider('https://mainnet.infura.io')
+const PollingBlockTracker = require('./src/polling')
 const blockTracker = new PollingBlockTracker({pollingInterval : 600000})
 blockTracker.on('latest', console.log)
 ```
 
 ### methods
 
-##### new PollingBlockTracker({ provider, pollingInterval, retryTimeout, keepEventLoopActive })
+##### new PollingBlockTracker({ pollingInterval, retryTimeout, keepEventLoopActive })
 
 creates a new block tracker with BlockCypher as a data source and
 `pollingInterval` (ms) timeout between polling for the latest block.
