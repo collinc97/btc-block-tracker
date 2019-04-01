@@ -1,34 +1,31 @@
 {
-  "name": "eth-block-tracker",
-  "version": "4.3.0",
-  "description": "A block tracker for the Ethereum blockchain. Keeps track of the latest block.",
+  "name": "btc-block-tracker",
+  "version": "1.0.0",
+  "description": "A block tracker for the Bitcoin blockchain. Keeps track of the latest block.",
   "main": "src/polling.js",
   "scripts": {
     "test": "npm run build && node test/index.js",
     "prepublishOnly": "npm run build",
-    "build": "npm run build:clean && npm run build:es5 && npm run build:bundle && npm run build:validate",
+    "build": "npm run build:clean && npm run build:bundle",
     "build:clean": "rm -rf ./dist && mkdir -p ./dist",
-    "build:es5": "babel ./src -d dist/es5/",
     "build:bundle": "npm run build:bundle:polling && npm run build:bundle:base",
-    "build:bundle:polling": "browserify -s PollingBlockTracker -e src/polling.js -g babelify > dist/PollingBlockTracker.js",
-    "build:bundle:base": "browserify -s BaseBlockTracker -e src/base.js -g babelify > dist/BaseBlockTracker.js",
-    "build:validate": "uglifyjs dist/es5/**.js > /dev/null"
+    "build:bundle:polling": "browserify -s PollingBlockTracker -e src/polling.js  > dist/PollingBlockTracker.js",
+    "build:bundle:base": "browserify -s BaseBlockTracker -e src/base.js  > dist/BaseBlockTracker.js"
   },
-  "author": "kumavis",
+  "authors": ["collinc97","kumavis"],
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
     "blockcypher": "^0.2.0",
-    "eth-query": "^2.1.0",
+    "pify": "^4.0.1",
     "safe-event-emitter": "^1.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babelify": "^8.0.0",
     "browserify": "^16.2.3",
-    "eth-json-rpc-infura": "^3.1.2",
-    "ganache-core": "^2.2.1",
     "tape": "^4.9.0",
     "uglify-js": "^3.4.10"
   },
@@ -37,10 +34,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kumavis/eth-block-tracker.git"
+    "url": "git+https://github.com/collinc97/btc-block-tracker.git"
   },
   "bugs": {
-    "url": "https://github.com/kumavis/eth-block-tracker/issues"
+    "url": "https://github.com/collinc97/btc-block-tracker/issues"
   },
-  "homepage": "https://github.com/kumavis/eth-block-tracker#readme"
+  "homepage": "https://github.com/collinc97/btc-block-tracker#readme"
 }

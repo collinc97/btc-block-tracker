@@ -1,4 +1,3 @@
-const EthQuery = require('eth-query')
 const SafeEventEmitter = require('safe-event-emitter')
 
 const sec = 1000

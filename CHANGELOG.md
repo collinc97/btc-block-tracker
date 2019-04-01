@@ -1,3 +1,8 @@
+
+### 1.0.0
+Rewritten to use Blockcypher API requests to poll for new blocks. Name changed to `btc-block-tracker`.
+
+# eth-block-tracker
 ### 4.0.0
 
 Significant rewrite of `eth-block-tracker`. Primary reason was optimizing network IO.
